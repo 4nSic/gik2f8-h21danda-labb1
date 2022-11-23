@@ -1,5 +1,7 @@
 import {BookList} from "../Components/BookList.js";
 import {getAll} from "../api/api.js";
+import {BookInfo} from "../Components/BookInfo.js"
+//import {BookInfo} from "../Components/BookInfo";
 'use strict';
 /* Vad ska vi göra här? */
 let bookList =[];
@@ -22,6 +24,10 @@ searchField.addEventListener("keyup", (e) =>
         })
     )
 );
+
+export function ListItemEventLiatner(e){
+    renderBookInfo(e.target.innerHTML);
+}
 
 
 /*function searchBokks(searchTerm)*/
@@ -69,6 +75,26 @@ function renderBookList(bookList){
         root.insertAdjacentElement('beforeend', BookList(bookList));                    
     }*/
     
+}
+
+export function renderBookInfo(book){
+    let info = book.split('-'); 
+    const title = info[1].toLowerCase().trim();  
+    const author = info[0].toLowerCase().trim();
+    let targetIndex;
+    for (let index = 0; index < bookList.length; index++) {
+        if ((bookList[index].author.toLowerCase() === author) && (bookList[index].title.toLowerCase() === title) ){
+            targetIndex = index;
+            break;  
+        }
+    }
+
+    let existingElement = document.getElementById("mainInfoDiv");
+    const root = document.getElementById("root");
+    
+    existingElement && existingElement.remove();
+    root.insertAdjacentHTML('afterend', BookInfo(bookList[targetIndex]));
+
 }
 
 
