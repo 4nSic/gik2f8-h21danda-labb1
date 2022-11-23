@@ -25,8 +25,21 @@ searchField.addEventListener("keyup", (e) =>
     )
 );
 
-export function ListItemEventLiatner(e){
-    renderBookInfo(e.target.innerHTML);
+export function ListItemEventLiatner(e){  
+    e.type == "mouseenter" && renderBookInfo(e.target.innerHTML);
+
+    e.type == "mouseleave" && document.getElementById("mainInfoDiv") && document.getElementById("mainInfoDiv").remove();
+}
+
+export function infoDivEventListner(e){
+        let div = document.getElementById('mainInfoDiv');
+        if(div)
+        {
+            let left = e.pageX;
+            let top = e.pageY +150;
+            div.style.left =  left + 'px';
+            div.style.top = top  + 'px';
+        }
 }
 
 
@@ -65,15 +78,10 @@ function renderBookList(bookList){
     existingElement && existingElement.remove();
 
     bookList.length > 0 && root.insertAdjacentElement('beforeend', BookList(bookList));
+    existingElement = document.querySelector(".book-list");
+    existingElement.addEventListener("mousemove", infoDivEventListner);
 
-    /*if (existingElement) {
-        existingElement.remove();
-    }*/
-        
-    /*if (bookList.length > 0) {   
-        const root = document.getElementById("root");
-        root.insertAdjacentElement('beforeend', BookList(bookList));                    
-    }*/
+   
     
 }
 
@@ -92,8 +100,12 @@ export function renderBookInfo(book){
     let existingElement = document.getElementById("mainInfoDiv");
     const root = document.getElementById("root");
     
+    let existinglist = document.querySelector(".book-list");
+
     existingElement && existingElement.remove();
+
     root.insertAdjacentHTML('afterend', BookInfo(bookList[targetIndex]));
+
 
 }
 
