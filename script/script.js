@@ -1,12 +1,12 @@
 import {BookList} from "../Components/BookList.js";
-import {getAll} from "../api/api.js";
+import {getAll, getBook} from "../api/api.js";
 import {BookInfo} from "../Components/BookInfo.js"
-//import {BookInfo} from "../Components/BookInfo";
+
 'use strict';
 /* Vad ska vi göra här? */
 let bookList =[];
 window.addEventListener('load', () => {
-    getAll().then((apiBooks) => bookList = apiBooks) 
+    getAll().then((apiBooks) => bookList = apiBooks);
 });
 
 /*const searchInput = document.children[0].children[1].children[1].children[1];*/
@@ -25,21 +25,22 @@ searchField.addEventListener("keyup", (e) =>
     )
 );
 
-export function ListItemEventLiatner(e){  
-    e.type == "mouseenter" && renderBookInfo(e.target.innerHTML);
+export async function  ListItemEventLiatner(e){  
+   
+    e.type == "mouseenter" && renderBookInfo(await getBook(e.target.id));
 
-    e.type == "mouseleave" && document.getElementById("mainInfoDiv") && document.getElementById("mainInfoDiv").remove();
+    e.type == "mouseleave" && document.getElementById("bookDetail") && document.getElementById("bookDetail").remove();
 }
 
-export function infoDivEventListner(e){
-        let div = document.getElementById('mainInfoDiv');
-        if(div)
-        {
-            let left = e.pageX;
-            let top = e.pageY +150;
-            div.style.left =  left + 'px';
-            div.style.top = top  + 'px';
-        }
+function infoDivEventListner(e){
+    let div = document.getElementById('bookDetail');
+    if(div)
+    {
+        let left = e.pageX;
+        let top = e.pageY +150;
+        div.style.left =  left + 'px';
+        div.style.top = top  + 'px';
+    }
 }
 
 
@@ -77,34 +78,29 @@ function renderBookList(bookList){
     
     existingElement && existingElement.remove();
 
-    bookList.length > 0 && root.insertAdjacentElement('beforeend', BookList(bookList));
-    existingElement = document.querySelector(".book-list");
-    existingElement.addEventListener("mousemove", infoDivEventListner);
-
-   
-    
+    if(bookList.length > 0)
+    {
+        root.insertAdjacentElement('beforeend', BookList(bookList));
+        existingElement = document.querySelector(".book-list");
+        existingElement.addEventListener("mousemove", infoDivEventListner);
+       
+        let liElements = existingElement.children
+        for (let index = 0; index < liElements.length; index++) {
+            liElements[index].addEventListener("mouseenter",ListItemEventLiatner);
+            liElements[index].addEventListener("mouseleave",ListItemEventLiatner);
+            
+        }
+    }  
 }
 
 export function renderBookInfo(book){
-    let info = book.split('-'); 
-    const title = info[1].toLowerCase().trim();  
-    const author = info[0].toLowerCase().trim();
-    let targetIndex;
-    for (let index = 0; index < bookList.length; index++) {
-        if ((bookList[index].author.toLowerCase() === author) && (bookList[index].title.toLowerCase() === title) ){
-            targetIndex = index;
-            break;  
-        }
-    }
 
-    let existingElement = document.getElementById("mainInfoDiv");
+    let existingElement = document.getElementById("bookDetail");
     const root = document.getElementById("root");
     
-    let existinglist = document.querySelector(".book-list");
-
     existingElement && existingElement.remove();
 
-    root.insertAdjacentHTML('afterend', BookInfo(bookList[targetIndex]));
+    root.insertAdjacentHTML('afterend', BookInfo(book));
 
 
 }

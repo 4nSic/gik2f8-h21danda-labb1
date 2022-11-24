@@ -13,3 +13,9 @@ export async function getAll(){
 
     return result;
 }
+
+export async function getBook(bookId){
+    const result = await fetch(url+`/${bookId}`).then((result) => result.json());
+
+    return result;
+}
