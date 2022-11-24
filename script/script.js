@@ -3,6 +3,7 @@ import {getAll, getBook} from "../api/api.js";
 import {BookInfo} from "../Components/BookInfo.js"
 
 'use strict';
+const yOffset = 160;
 /* Vad ska vi göra här? */
 let bookList =[];
 window.addEventListener('load', () => {
@@ -26,23 +27,22 @@ searchField.addEventListener("keyup", (e) =>
 );
 
 export async function  ListItemEventLiatner(e){  
+
+    e.stopPropagation(); 
    
-    e.type == "mouseenter" && renderBookInfo(await getBook(e.target.id));
+    e.type == "mouseenter" && renderBookInfo(await getBook(e.target.id), e.pageX, e.pageY +yOffset );
 
     e.type == "mouseleave" && document.getElementById("bookDetail") && document.getElementById("bookDetail").remove();
-}
 
-function infoDivEventListner(e){
-    let div = document.getElementById('bookDetail');
-    if(div)
-    {
+    if(e.type == "mousemove" && document.getElementById("bookDetail"))
+    {       
+        let div = document.getElementById('bookDetail');
         let left = e.pageX;
-        let top = e.pageY +150;
+        let top = e.pageY +yOffset;
         div.style.left =  left + 'px';
         div.style.top = top  + 'px';
     }
 }
-
 
 /*function searchBokks(searchTerm)*/
     /*
@@ -82,25 +82,25 @@ function renderBookList(bookList){
     {
         root.insertAdjacentElement('beforeend', BookList(bookList));
         existingElement = document.querySelector(".book-list");
-        existingElement.addEventListener("mousemove", infoDivEventListner);
        
         let liElements = existingElement.children
         for (let index = 0; index < liElements.length; index++) {
             liElements[index].addEventListener("mouseenter",ListItemEventLiatner);
             liElements[index].addEventListener("mouseleave",ListItemEventLiatner);
+            liElements[index].addEventListener("mousemove", ListItemEventLiatner);
             
         }
     }  
 }
 
-export function renderBookInfo(book){
+export function renderBookInfo(book, left, top){
 
     let existingElement = document.getElementById("bookDetail");
     const root = document.getElementById("root");
     
     existingElement && existingElement.remove();
 
-    root.insertAdjacentHTML('afterend', BookInfo(book));
+    root.insertAdjacentHTML('afterend', BookInfo(book, left, top));
 
 
 }
