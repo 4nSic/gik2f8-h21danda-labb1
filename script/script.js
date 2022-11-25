@@ -74,13 +74,15 @@ async function  ListItemEventLiatner(e){
 function renderBookList(bookList){
 
     let existingElement = document.querySelector(".book-list");
-    const root = document.getElementById("root");
-    
     existingElement && existingElement.remove();
 
     if(bookList.length > 0)
     {
+        const root = document.getElementById("root");
         root.insertAdjacentElement('beforeend', BookList(bookList));
+        root.addEventListener("mouseover",(e) =>{
+           let test = document.getElementById("bookDetail");
+           test && test.remove(); });
         existingElement = document.querySelector(".book-list");
        
         let liElements = existingElement.children
@@ -100,6 +102,11 @@ function renderBookInfo(book, left, top){
     existingElement && existingElement.remove();
 
     root.insertAdjacentHTML('afterend', BookInfo(book, left, top));
+    document.getElementById("bookDetail").addEventListener("mouseover",(e) =>{
+        let existingElement = document.getElementById("bookDetail");
+        existingElement && existingElement.remove(); 
+    });
+
 
 
 }
