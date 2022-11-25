@@ -26,7 +26,7 @@ searchField.addEventListener("keyup", (e) =>
     )
 );
 
-export async function  ListItemEventLiatner(e){  
+async function  ListItemEventLiatner(e){  
 
     e.stopPropagation(); 
    
@@ -87,13 +87,12 @@ function renderBookList(bookList){
         for (let index = 0; index < liElements.length; index++) {
             liElements[index].addEventListener("mouseenter",ListItemEventLiatner);
             liElements[index].addEventListener("mouseleave",ListItemEventLiatner);
-            liElements[index].addEventListener("mousemove", ListItemEventLiatner);
-            
+            liElements[index].addEventListener("mousemove", ListItemEventLiatner);       
         }
     }  
 }
 
-export function renderBookInfo(book, left, top){
+function renderBookInfo(book, left, top){
 
     let existingElement = document.getElementById("bookDetail");
     const root = document.getElementById("root");

@@ -18,8 +18,7 @@ let html =`
     </div>
   </div>
 </div>
-`
-
+`;
 return html;
 }
 
