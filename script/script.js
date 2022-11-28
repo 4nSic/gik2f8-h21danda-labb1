@@ -35,8 +35,8 @@ async function  ListItemEventLiatner(e){
     e.type == "mouseleave" && removeBookDetail();
 
     if(e.type == "mousemove" && document.getElementById("bookDetail"))
-    {       
-        let div = document.getElementById('bookDetail');
+    {   
+        let div = document.getElementById('bookDetail');         
         let left = e.pageX;
         let top = e.pageY +yOffset;
         div.style.left =  left + 'px';
@@ -78,6 +78,7 @@ function renderBookInfo(book, left, top){
     root.insertAdjacentHTML('afterend', BookDetail(book, left, top));
     document.getElementById("bookDetail").addEventListener("mouseover",removeBookDetail);
 }
+
 
 
 
