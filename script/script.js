@@ -3,17 +3,17 @@ import {getAll, getBook} from "../api/api.js";
 import {BookInfo} from "../Components/BookInfo.js"
 
 'use strict';
-const yOffset = 160;
-/* Vad ska vi göra här? */
+const yOffset = 165;
 let bookList =[];
+
 window.addEventListener('load', () => {
     getAll().then((apiBooks) => bookList = apiBooks);
+    
 });
 
-/*const searchInput = document.children[0].children[1].children[1].children[1];*/
-const searchField = document.getElementById("searchField");
-/*searchField.addEventListener("keyup", (e) => searchBokks(e.target.value));*/
-searchField.addEventListener("keyup", (e) => 
+window.addEventListener('mousemove',removeBookDetail);
+
+document.getElementById("searchField").addEventListener("keyup", (e) => 
     renderBookList(
         bookList.filter(({title, author}) => {
             const searchTerm = e.target.value.toLowerCase();
@@ -32,7 +32,7 @@ async function  ListItemEventLiatner(e){
    
     e.type == "mouseenter" && renderBookInfo(await getBook(e.target.id), e.pageX, e.pageY +yOffset );
 
-    e.type == "mouseleave" && document.getElementById("bookDetail") && document.getElementById("bookDetail").remove();
+    e.type == "mouseleave" && removeBookDetail();
 
     if(e.type == "mousemove" && document.getElementById("bookDetail"))
     {       
@@ -44,33 +44,10 @@ async function  ListItemEventLiatner(e){
     }
 }
 
-/*function searchBokks(searchTerm)*/
-    /*
-        Loppa igenom bookList
-        Gämför titel med söktermen
-        Om söktermen finns någonstans i titlen lägg till elementet i en ny lista (filterdList)
-        Returnerar filterdList eller anropar renderBoookList
-    */
-    /*    
-        if(searchTerm){
-            let filterdList = bookList.filter(
-            ({title, author}) =>(
-                title.toLowerCase().indexOf(searchTerm.toLowerCase()) >=0  ||
-                author.toLowerCase().indexOf(searchTerm.toLowerCase()) >=0)
-            );
-    
-            renderBookList(filterdList);
-            /*for (let index = 0; index < bookList.length; index++) {
-                const title = bookList[index].title.toLowerCase();
-                const author = bookList[index].author.toLowerCase();
-                if (title.indexOf(searchTerm.toLowerCase()) >= 0 || author.indexOf(searchTerm.toLowerCase()) >=0) 
-                {            
-                    filterdList.push(bookList[index]);
-                }
-            }*/
-    /*    }
-    }
-*/
+function removeBookDetail(){
+    document.getElementById("bookDetail") && document.getElementById("bookDetail").remove();
+}
+
 function renderBookList(bookList){
 
     let existingElement = document.querySelector(".book-list");
@@ -80,9 +57,7 @@ function renderBookList(bookList){
     {
         const root = document.getElementById("root");
         root.insertAdjacentElement('beforeend', BookList(bookList));
-        root.addEventListener("mouseover",(e) =>{
-           let test = document.getElementById("bookDetail");
-           test && test.remove(); });
+        root.addEventListener("mouseover", removeBookDetail);
         existingElement = document.querySelector(".book-list");
        
         let liElements = existingElement.children
@@ -102,13 +77,7 @@ function renderBookInfo(book, left, top){
     existingElement && existingElement.remove();
 
     root.insertAdjacentHTML('afterend', BookInfo(book, left, top));
-    document.getElementById("bookDetail").addEventListener("mouseover",(e) =>{
-        let existingElement = document.getElementById("bookDetail");
-        existingElement && existingElement.remove(); 
-    });
-
-
-
+    document.getElementById("bookDetail").addEventListener("mouseover",removeBookDetail);
 }
 
 
