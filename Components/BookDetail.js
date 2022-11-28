@@ -1,5 +1,5 @@
 'use strict'
-export const BookInfo = (book, left, top) =>{
+export const BookDetail = (book, left, top) =>{
 
 let html =`
 <div id="bookDetail" class="mt-2 max-w-md w-full lg:max-w-80  lg:flex" style="position:absolute; top: ${top}px; left:${left}px; transform:translate(-50%,-50%);">

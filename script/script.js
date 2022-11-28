@@ -1,6 +1,6 @@
 import {BookList} from "../Components/BookList.js";
 import {getAll, getBook} from "../api/api.js";
-import {BookInfo} from "../Components/BookInfo.js"
+import {BookDetail} from "../Components/BookDetail.js"
 
 'use strict';
 const yOffset = 165;
@@ -61,11 +61,11 @@ function renderBookList(bookList){
         existingElement = document.querySelector(".book-list");
        
         let liElements = existingElement.children
-        for (let index = 0; index < liElements.length; index++) {
-            liElements[index].addEventListener("mouseenter",ListItemEventLiatner);
-            liElements[index].addEventListener("mouseleave",ListItemEventLiatner);
-            liElements[index].addEventListener("mousemove", ListItemEventLiatner);       
-        }
+        liElements.array.forEach(element => {
+            element.addEventListener("mouseenter",ListItemEventLiatner);
+            element.addEventListener("mouseleave",ListItemEventLiatner);
+            element.addEventListener("mousemove", ListItemEventLiatner);
+        });
     }  
 }
 
@@ -76,7 +76,7 @@ function renderBookInfo(book, left, top){
     
     existingElement && existingElement.remove();
 
-    root.insertAdjacentHTML('afterend', BookInfo(book, left, top));
+    root.insertAdjacentHTML('afterend', BookDetail(book, left, top));
     document.getElementById("bookDetail").addEventListener("mouseover",removeBookDetail);
 }
 
