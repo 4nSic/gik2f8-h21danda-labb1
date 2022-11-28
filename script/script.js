@@ -61,20 +61,19 @@ function renderBookList(bookList){
         existingElement = document.querySelector(".book-list");
        
         let liElements = existingElement.children
-        liElements.array.forEach(element => {
-            element.addEventListener("mouseenter",ListItemEventLiatner);
-            element.addEventListener("mouseleave",ListItemEventLiatner);
-            element.addEventListener("mousemove", ListItemEventLiatner);
-        });
+        for (let index = 0; index < liElements.length; index++) {
+            liElements[index].addEventListener("mouseenter",ListItemEventLiatner);
+            liElements[index].addEventListener("mouseleave",ListItemEventLiatner);
+            liElements[index].addEventListener("mousemove", ListItemEventLiatner);     
+        }
     }  
 }
 
 function renderBookInfo(book, left, top){
-
-    let existingElement = document.getElementById("bookDetail");
+   
     const root = document.getElementById("root");
     
-    existingElement && existingElement.remove();
+    removeBookDetail()
 
     root.insertAdjacentHTML('afterend', BookDetail(book, left, top));
     document.getElementById("bookDetail").addEventListener("mouseover",removeBookDetail);
