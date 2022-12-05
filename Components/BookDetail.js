@@ -8,12 +8,13 @@ let html =`
   <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
     <div class="mb-8">
       <div class="text-gray-900 font-bold text-lg mb-2">${book.title}</div>
-      <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
+      <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium.</p>
     </div>
     <div class="flex items-center">
       <div class="text-sm">
         <p class="text-gray-900 leading-none">Author: ${book.author}</p>
-        <p class="text-gray-600">Release date: ${book.releaseDate}</p>
+        <p class="text-gray-900">Pages: ${book.pages}</p>
+        <p class="text-gray-900">Release date: ${book.releaseDate}</p>
       </div>
     </div>
   </div>

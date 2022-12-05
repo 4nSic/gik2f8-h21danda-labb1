@@ -26,7 +26,7 @@ document.getElementById("searchField").addEventListener("keyup", (e) =>
     )
 );
 
-async function  ListItemEventLiatner(e){  
+async function ListItemEventLiatner(e){  
 
     e.stopPropagation(); 
    
